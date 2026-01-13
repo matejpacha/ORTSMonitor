@@ -46,5 +46,89 @@ namespace ORTSMonitor.Properties {
                 this["ConsoleViewOn"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TractionCharForceVisible {
+            get {
+                return ((bool)(this["TractionCharForceVisible"]));
+            }
+            set {
+                this["TractionCharForceVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TractionCharAdhesionVisible {
+            get {
+                return ((bool)(this["TractionCharAdhesionVisible"]));
+            }
+            set {
+                this["TractionCharAdhesionVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TractionCharResistanceVisible {
+            get {
+                return ((bool)(this["TractionCharResistanceVisible"]));
+            }
+            set {
+                this["TractionCharResistanceVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ChartSpeedLimitVisible {
+            get {
+                return ((bool)(this["ChartSpeedLimitVisible"]));
+            }
+            set {
+                this["ChartSpeedLimitVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ChartSpeedVisible {
+            get {
+                return ((bool)(this["ChartSpeedVisible"]));
+            }
+            set {
+                this["ChartSpeedVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ChartCurveVisible {
+            get {
+                return ((bool)(this["ChartCurveVisible"]));
+            }
+            set {
+                this["ChartCurveVisible"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ChartGradeVisible {
+            get {
+                return ((bool)(this["ChartGradeVisible"]));
+            }
+            set {
+                this["ChartGradeVisible"] = value;
+            }
+        }
     }
 }

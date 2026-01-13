@@ -63,9 +63,9 @@
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-            statusStrip1.Location = new Point(0, 980);
+            statusStrip1.Location = new Point(0, 695);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(800, 22);
+            statusStrip1.Size = new Size(1009, 22);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -82,7 +82,7 @@
             dockPanel1.Location = new Point(3, 3);
             dockPanel1.Name = "dockPanel1";
             tableLayoutPanel1.SetRowSpan(dockPanel1, 2);
-            dockPanel1.Size = new Size(794, 950);
+            dockPanel1.Size = new Size(1003, 665);
             dockPanel1.TabIndex = 4;
             // 
             // tableLayoutPanel1
@@ -97,7 +97,7 @@
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(800, 956);
+            tableLayoutPanel1.Size = new Size(1009, 671);
             tableLayoutPanel1.TabIndex = 5;
             // 
             // toolStripContainer1
@@ -106,11 +106,11 @@
             // toolStripContainer1.ContentPanel
             // 
             toolStripContainer1.ContentPanel.Controls.Add(tableLayoutPanel1);
-            toolStripContainer1.ContentPanel.Size = new Size(800, 956);
+            toolStripContainer1.ContentPanel.Size = new Size(1009, 671);
             toolStripContainer1.Dock = DockStyle.Fill;
             toolStripContainer1.Location = new Point(0, 0);
             toolStripContainer1.Name = "toolStripContainer1";
-            toolStripContainer1.Size = new Size(800, 980);
+            toolStripContainer1.Size = new Size(1009, 695);
             toolStripContainer1.TabIndex = 6;
             toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -124,7 +124,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, viewToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.Size = new Size(1009, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -210,12 +210,12 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 1002);
+            ClientSize = new Size(1009, 717);
             Controls.Add(toolStripContainer1);
             Controls.Add(statusStrip1);
             MainMenuStrip = menuStrip1;
             Name = "Form1";
-            Text = "Form1";
+            Text = "OpenRails CZ/SK Web Monitor";
             Load += Form1_Load;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();

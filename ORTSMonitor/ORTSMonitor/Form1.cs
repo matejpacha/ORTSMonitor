@@ -22,6 +22,9 @@ namespace ORTSMonitor
         HtmlViewer trainDriving;
         ChartPanel myChart;
         characteristicsPanel locoChar;
+        double timeSpan;
+        private DateTime lastTickTime = DateTime.MinValue;
+        double distance = 0.0;
 
         ProjectFile projectFile;
 
@@ -63,10 +66,21 @@ namespace ORTSMonitor
             locoChar.Show(dockPanel1, DockState.DockBottom);
 
             projectFile = new ProjectFile();
+            timeSpan = 0.0;
+            distance = 0.0;
         }
 
         private async void timer1_Tick(object sender, EventArgs e)
         {
+            DateTime now = DateTime.Now;
+            if (lastTickTime != DateTime.MinValue)
+            {
+                TimeSpan elapsed = now - lastTickTime;
+                timeSpan = elapsed.TotalSeconds;
+                // Use elapsed.TotalMilliseconds, elapsed.TotalSeconds, etc.
+            }
+            lastTickTime = now;
+
             timer1.Stop();
 
             try
@@ -124,19 +138,53 @@ namespace ORTSMonitor
                     }
 
                     double speed = parsedData.Speed ?? 0.0;
-                    double distance = parsedData.Distance ?? 0.0;
+                    
+                    if (parsedData.Distance != null) 
+                    {
+                        distance = parsedData.Distance ?? 0.0;
+                    }
+                    else
+                    {
+                        distance += Math.Abs(speed) / 3.6 * timeSpan;
+                    }
+                    
+                    double curve = hudForceData.CarForces[0].CurveRadius ?? 0.0;
+                    double grade = hudForceData.CarForces[0].Gradient ?? 0.0;
+
+                    double direction = 0.0;
+                    string dirString = (parsedData.Direction ?? "").ToLower();
+                    if (dirString == "forward")
+                    {
+                        direction = 1.0;
+                    }
+                    else
+                    {
+                        if (dirString == "reverse")
+                        {
+                            direction = -1.0;
+                        }
+                        else
+                        {
+                            direction = 0.0;
+                        }
+                    }
+
 
                     double force = hudForceData.ForceDetails.AxleDriveForce ?? 0.0;
                     force = force * 0.001;
+
+                    double locoMass = hudForceData.CarForces[0].Mass ?? 1.0;
+
                     double adhesionLimit = hudForceData.ForceDetails.LocoAdhesion ?? 0.0;
+                    adhesionLimit = adhesionLimit * 0.01 * locoMass * 9.81;
 
 
                     if (speed < 0.0)
                         speed = -speed;
 
-                    myChart.AddSpeedPoint(distance, speed, parsedData.Limit ?? 0.0);
+                    myChart.AddSpeedPoint(distance, speed, parsedData.Limit ?? 0.0, grade * 10.0, curve *0.01);
 
-                    locoChar.AddCharPoint(speed, force, adhesionLimit, frictionForce);
+                    locoChar.AddCharPoint(speed, force * direction, adhesionLimit, frictionForce);
                 }
             }
             catch (Exception ex)

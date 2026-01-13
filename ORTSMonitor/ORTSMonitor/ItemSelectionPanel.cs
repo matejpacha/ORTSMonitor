@@ -37,7 +37,7 @@ namespace ORTSMonitor
                         IsChecked = checkedListBox1.GetItemChecked(i)
                     });
                 }
-
+                
                 return list;
             }
 

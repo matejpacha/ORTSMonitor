@@ -19,5 +19,8 @@
     <Compile Update="ItemSelectionPanel.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="TimeChartPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

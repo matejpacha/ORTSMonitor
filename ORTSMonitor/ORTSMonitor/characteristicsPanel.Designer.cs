@@ -1,6 +1,6 @@
 ﻿namespace ORTSMonitor
 {
-    partial class ChartPanel
+    partial class characteristicsPanel
     {
         /// <summary> 
         /// Required designer variable.
@@ -34,9 +34,9 @@
             clearToolStripMenuItem = new ToolStripMenuItem();
             resetAxesToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
-            speedLimitToolStripMenuItem = new ToolStripMenuItem();
-            curveToolStripMenuItem = new ToolStripMenuItem();
-            gradientToolStripMenuItem = new ToolStripMenuItem();
+            tractiveForceToolStripMenuItem = new ToolStripMenuItem();
+            adhesionToolStripMenuItem = new ToolStripMenuItem();
+            resistiveForceToolStripMenuItem = new ToolStripMenuItem();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -56,56 +56,57 @@
             // 
             // contextMenuStrip1
             // 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { clearToolStripMenuItem, resetAxesToolStripMenuItem, toolStripSeparator1, speedLimitToolStripMenuItem, curveToolStripMenuItem, gradientToolStripMenuItem });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { clearToolStripMenuItem, resetAxesToolStripMenuItem, toolStripSeparator1, tractiveForceToolStripMenuItem, adhesionToolStripMenuItem, resistiveForceToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(134, 120);
+            contextMenuStrip1.Size = new Size(165, 120);
             // 
             // clearToolStripMenuItem
             // 
             clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            clearToolStripMenuItem.Size = new Size(133, 22);
+            clearToolStripMenuItem.Size = new Size(164, 22);
             clearToolStripMenuItem.Text = "&Clear";
             clearToolStripMenuItem.Click += clearToolStripMenuItem_Click;
             // 
             // resetAxesToolStripMenuItem
             // 
             resetAxesToolStripMenuItem.Name = "resetAxesToolStripMenuItem";
-            resetAxesToolStripMenuItem.Size = new Size(133, 22);
+            resetAxesToolStripMenuItem.Size = new Size(164, 22);
             resetAxesToolStripMenuItem.Text = "&Reset axes";
+            resetAxesToolStripMenuItem.Click += resetAxesToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(130, 6);
+            toolStripSeparator1.Size = new Size(161, 6);
             // 
-            // speedLimitToolStripMenuItem
+            // tractiveForceToolStripMenuItem
             // 
-            speedLimitToolStripMenuItem.Name = "speedLimitToolStripMenuItem";
-            speedLimitToolStripMenuItem.Size = new Size(133, 22);
-            speedLimitToolStripMenuItem.Text = "&Speed limit";
-            speedLimitToolStripMenuItem.Click += speedLimitToolStripMenuItem_Click;
+            tractiveForceToolStripMenuItem.Name = "tractiveForceToolStripMenuItem";
+            tractiveForceToolStripMenuItem.Size = new Size(164, 22);
+            tractiveForceToolStripMenuItem.Text = "&Tractive Force  ✓";
+            tractiveForceToolStripMenuItem.Click += tractiveForceToolStripMenuItem_Click;
             // 
-            // curveToolStripMenuItem
+            // adhesionToolStripMenuItem
             // 
-            curveToolStripMenuItem.Name = "curveToolStripMenuItem";
-            curveToolStripMenuItem.Size = new Size(133, 22);
-            curveToolStripMenuItem.Text = "&Curve";
-            curveToolStripMenuItem.Click += curveToolStripMenuItem_Click;
+            adhesionToolStripMenuItem.Name = "adhesionToolStripMenuItem";
+            adhesionToolStripMenuItem.Size = new Size(164, 22);
+            adhesionToolStripMenuItem.Text = "&Adhesion  ✓";
+            adhesionToolStripMenuItem.Click += adhesionToolStripMenuItem_Click;
             // 
-            // gradientToolStripMenuItem
+            // resistiveForceToolStripMenuItem
             // 
-            gradientToolStripMenuItem.Name = "gradientToolStripMenuItem";
-            gradientToolStripMenuItem.Size = new Size(133, 22);
-            gradientToolStripMenuItem.Text = "&Gradient";
-            gradientToolStripMenuItem.Click += gradientToolStripMenuItem_Click;
+            resistiveForceToolStripMenuItem.Name = "resistiveForceToolStripMenuItem";
+            resistiveForceToolStripMenuItem.Size = new Size(164, 22);
+            resistiveForceToolStripMenuItem.Text = "&Resistive force  ✓";
+            resistiveForceToolStripMenuItem.Click += resistiveForceToolStripMenuItem_Click;
             // 
-            // ChartPanel
+            // characteristicsPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(284, 261);
             Controls.Add(plotView1);
-            Name = "ChartPanel";
+            Name = "characteristicsPanel";
             contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -117,8 +118,8 @@
         private ToolStripMenuItem clearToolStripMenuItem;
         private ToolStripMenuItem resetAxesToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripMenuItem speedLimitToolStripMenuItem;
-        private ToolStripMenuItem curveToolStripMenuItem;
-        private ToolStripMenuItem gradientToolStripMenuItem;
+        private ToolStripMenuItem tractiveForceToolStripMenuItem;
+        private ToolStripMenuItem adhesionToolStripMenuItem;
+        private ToolStripMenuItem resistiveForceToolStripMenuItem;
     }
 }

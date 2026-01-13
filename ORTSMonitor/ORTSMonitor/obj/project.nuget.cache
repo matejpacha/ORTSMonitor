@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "QHSBtTqFUH4FKT48ae4NRiv1poFkLbTAAfWDj2O4wQhGYqt3mvkvDRzy9q+rr8tc6JaI5lir9y1IeI3T/2wAkA==",
+  "success": true,
+  "projectFilePath": "D:\\Pacha\\GIT\\ORTSMonitor\\ORTSMonitor\\ORTSMonitor\\ORTSMonitor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\dockpanelsuite\\3.1.1\\dockpanelsuite.3.1.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\dockpanelsuite.themevs2015\\3.1.1\\dockpanelsuite.themevs2015.3.1.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.web.webview2\\1.0.3650.58\\microsoft.web.webview2.1.0.3650.58.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\oxyplot.core\\2.2.0\\oxyplot.core.2.2.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\oxyplot.windowsforms\\2.2.0\\oxyplot.windowsforms.2.2.0.nupkg.sha512"
+  ],
+  "logs": []
+}
