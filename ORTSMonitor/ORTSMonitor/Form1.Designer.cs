@@ -48,6 +48,7 @@
             viewToolStripMenuItem1 = new ToolStripMenuItem();
             openFileDialog1 = new OpenFileDialog();
             saveFileDialog1 = new SaveFileDialog();
+            toolStripStatusLabel2 = new ToolStripStatusLabel();
             statusStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
@@ -58,11 +59,12 @@
             // 
             // timer1
             // 
+            timer1.Interval = 500;
             timer1.Tick += timer1_Tick;
             // 
             // statusStrip1
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2 });
             statusStrip1.Location = new Point(0, 695);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1009, 22);
@@ -206,6 +208,12 @@
             saveFileDialog1.Filter = "JSON files|*.json|All files|*.*";
             saveFileDialog1.Title = "Save file";
             // 
+            // toolStripStatusLabel2
+            // 
+            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            toolStripStatusLabel2.Size = new Size(69, 17);
+            toolStripStatusLabel2.Text = "Refresh rate";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -252,5 +260,6 @@
         private ToolStripMenuItem viewToolStripMenuItem;
         private ToolStripMenuItem signalsToolStripMenuItem;
         private ToolStripMenuItem viewToolStripMenuItem1;
+        private ToolStripStatusLabel toolStripStatusLabel2;
     }
 }

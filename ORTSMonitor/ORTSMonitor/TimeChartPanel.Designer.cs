@@ -28,34 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            plotView1 = new OxyPlot.WindowsForms.PlotView();
+            tableLayoutPanel1 = new TableLayoutPanel();
             SuspendLayout();
             // 
-            // plotView1
+            // tableLayoutPanel1
             // 
-            plotView1.Dock = DockStyle.Fill;
-            plotView1.Location = new Point(0, 0);
-            plotView1.Name = "plotView1";
-            plotView1.PanCursor = Cursors.Hand;
-            plotView1.Size = new Size(284, 261);
-            plotView1.TabIndex = 0;
-            plotView1.Text = "plotView1";
-            plotView1.ZoomHorizontalCursor = Cursors.SizeWE;
-            plotView1.ZoomRectangleCursor = Cursors.SizeNWSE;
-            plotView1.ZoomVerticalCursor = Cursors.SizeNS;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(284, 261);
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // TimeChartPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(284, 261);
-            Controls.Add(plotView1);
+            Controls.Add(tableLayoutPanel1);
             Name = "TimeChartPanel";
             ResumeLayout(false);
         }
 
         #endregion
 
-        private OxyPlot.WindowsForms.PlotView plotView1;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

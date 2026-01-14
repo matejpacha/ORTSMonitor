@@ -22,9 +22,11 @@ namespace ORTSMonitor
         HtmlViewer trainDriving;
         ChartPanel myChart;
         characteristicsPanel locoChar;
+        TimeChartPanel timeChart;
         double timeSpan;
         private DateTime lastTickTime = DateTime.MinValue;
         double distance = 0.0;
+        double time = 0.0;
 
         ProjectFile projectFile;
 
@@ -32,7 +34,7 @@ namespace ORTSMonitor
         {
             InitializeComponent();
 
-            timer1.Interval = 250; // 250 ms
+            timer1.Interval = 500; // 500 ms
             timer1.Start();
 
             toolStripStatusLabel1.Text = "Waiting for OpenRails...";
@@ -65,9 +67,38 @@ namespace ORTSMonitor
             locoChar = new characteristicsPanel();
             locoChar.Show(dockPanel1, DockState.DockBottom);
 
+            timeChart = new TimeChartPanel();
+            timeChart.ListOfItems = myItemSelectionPanel.CheckedItems;
+            timeChart.UpdateList();
+            timeChart.Show(dockPanel1, DockState.DockTop);
+
             projectFile = new ProjectFile();
             timeSpan = 0.0;
             distance = 0.0;
+
+            myItemSelectionPanel.ItemCheckedChanged += ItemSelectionPanel_ItemCheckedChanged;
+
+            myItemSelectionPanel.FormClosed += MyItemSelectionPanel_FormClosed;
+            myConsolePanel.FormClosed += MyConsolePanel_FormClosed;
+
+        }
+
+        private void MyConsolePanel_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.ConsoleViewOn = false;
+            Properties.Settings.Default.Save();
+        }
+
+        private void MyItemSelectionPanel_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.SignalsViewOn = false;
+            Properties.Settings.Default.Save();
+        }
+
+        private void ItemSelectionPanel_ItemCheckedChanged(object sender, ItemSelectionPanel.ItemCheckedEventArgs e)
+        {
+            timeChart.ListOfItems = myItemSelectionPanel.CheckedItems;
+            timeChart.UpdateList();
         }
 
         private async void timer1_Tick(object sender, EventArgs e)
@@ -78,6 +109,7 @@ namespace ORTSMonitor
                 TimeSpan elapsed = now - lastTickTime;
                 timeSpan = elapsed.TotalSeconds;
                 // Use elapsed.TotalMilliseconds, elapsed.TotalSeconds, etc.
+                time = time + timeSpan;
             }
             lastTickTime = now;
 
@@ -91,6 +123,28 @@ namespace ORTSMonitor
 
                 string forceInfo = await reader.GetHudDataAsStringAsync(4);
 
+                HudResponse commonInfo = await reader.GetHudDataAsync(0);
+                string timeValue = null;
+                int timeRowIndex = -1;
+
+                for (int i = 0; i < commonInfo.CommonTableRows.Count; i++)
+                {
+                    var row = commonInfo.CommonTableRows[i];
+                    if (row.Count >= 3)
+                    {
+                        string firstCol = row[0]?.Trim() ?? "";
+                        string lastCol = row[2]?.Trim() ?? "";
+
+                        if (firstCol.Equals("Time", StringComparison.OrdinalIgnoreCase))
+                        {
+                            timeValue = lastCol;
+                            timeRowIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                DateTime.TryParse(timeValue, out DateTime parsedDateTime);
 
 
                 myConsolePanel.ConsoleText = forceInfo;
@@ -102,11 +156,16 @@ namespace ORTSMonitor
                     toolStripStatusLabel1.Text = "OpenRails offline";
                     toolStripStatusLabel1.BackColor = Color.Red;
 
+                    toolStripStatusLabel2.Text = "Refresh rate: waiting ..." ;
+
                 }
                 else
                 {
                     toolStripStatusLabel1.Text = "OpenRails online";
                     toolStripStatusLabel1.BackColor = Color.Green;
+
+                    toolStripStatusLabel2.Text = "Refresh rate: " + timeSpan.ToString();
+
                     TrainDrivingData parsedData = await reader.ParseTrainDrivingDataAsync(true);
 
 
@@ -185,6 +244,8 @@ namespace ORTSMonitor
                     myChart.AddSpeedPoint(distance, speed, parsedData.Limit ?? 0.0, grade * 10.0, curve *0.01);
 
                     locoChar.AddCharPoint(speed, force * direction, adhesionLimit, frictionForce);
+
+                    timeChart.UpdateData(time, cabData);
                 }
             }
             catch (Exception ex)
@@ -216,6 +277,8 @@ namespace ORTSMonitor
                         projectFile = JsonSerializer.Deserialize<ProjectFile>(json, options);
 
                         myItemSelectionPanel.CheckedItems = projectFile.CheckedItems;
+                        timeChart.ListOfItems = myItemSelectionPanel.CheckedItems;
+                        timeChart.UpdateList();
 
                         foreach (DockContent content in dockPanel1.Contents)
                         {
@@ -275,11 +338,26 @@ namespace ORTSMonitor
 
             if (Properties.Settings.Default.SignalsViewOn)
             {
-                myItemSelectionPanel.Hide();
+                if(myItemSelectionPanel.IsDisposed)
+                {
+                    myItemSelectionPanel = new ItemSelectionPanel();
+                    myItemSelectionPanel.Show(dockPanel1, DockState.DockLeft);
+                    myItemSelectionPanel.ItemCheckedChanged += ItemSelectionPanel_ItemCheckedChanged;
+
+                    if(timeChart.IsDisposed == false) 
+                    {
+                        timeChart.ListOfItems = myItemSelectionPanel.CheckedItems;
+                        timeChart.UpdateList();
+                    }
+                }
+                myItemSelectionPanel.Show(dockPanel1);
             }
             else
             {
-                myItemSelectionPanel.Show();
+                if (myItemSelectionPanel.IsDisposed == false)
+                {
+                    myItemSelectionPanel.Hide();
+                }
             }
         }
 
@@ -289,11 +367,19 @@ namespace ORTSMonitor
 
             if (Properties.Settings.Default.ConsoleViewOn)
             {
-                myConsolePanel.Hide();
+                if (myConsolePanel.IsDisposed)
+                {
+                    myConsolePanel = new ConsolePanel();
+                    myConsolePanel.Show(dockPanel1, DockState.DockRight);
+                }
+                myConsolePanel.Show(dockPanel1);
             }
             else
             {
-                myConsolePanel.Show();
+                if (myConsolePanel.IsDisposed == false)
+                {
+                    myConsolePanel.Hide();
+                }
             }
         }
 

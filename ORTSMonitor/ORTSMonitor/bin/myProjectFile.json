@@ -1,0 +1,397 @@
+{
+  "Name": "C:\\Users\\Admin\\source\\repos\\ORTSMonitor\\ORTSMonitor\\bin\\myProjectFile.json",
+  "CheckedItems": [
+    {
+      "Text": "Rain Window",
+      "IsChecked": false
+    },
+    {
+      "Text": "Wipers Window",
+      "IsChecked": false
+    },
+    {
+      "Text": "Wheelslip",
+      "IsChecked": false
+    },
+    {
+      "Text": "Mu Wheelslip",
+      "IsChecked": false
+    },
+    {
+      "Text": "Aspect Display",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Repeater Lights Mask",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Display Blue Light",
+      "IsChecked": false
+    },
+    {
+      "Text": "Brake Pipe",
+      "IsChecked": false
+    },
+    {
+      "Text": "Main Res",
+      "IsChecked": false
+    },
+    {
+      "Text": "Brake Cyl",
+      "IsChecked": false
+    },
+    {
+      "Text": "Speedometer",
+      "IsChecked": false
+    },
+    {
+      "Text": "Ammeter Abs",
+      "IsChecked": false
+    },
+    {
+      "Text": "None",
+      "IsChecked": false
+    },
+    {
+      "Text": "None",
+      "IsChecked": false
+    },
+    {
+      "Text": "None",
+      "IsChecked": false
+    },
+    {
+      "Text": "Bell",
+      "IsChecked": false
+    },
+    {
+      "Text": "Sanders",
+      "IsChecked": false
+    },
+    {
+      "Text": "Reset",
+      "IsChecked": false
+    },
+    {
+      "Text": "Throttle",
+      "IsChecked": false
+    },
+    {
+      "Text": "Train Brake",
+      "IsChecked": false
+    },
+    {
+      "Text": "Engine Brake",
+      "IsChecked": false
+    },
+    {
+      "Text": "None",
+      "IsChecked": false
+    },
+    {
+      "Text": "Front Hlight",
+      "IsChecked": false
+    },
+    {
+      "Text": "Heating Offon",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts 2dexternalwipers",
+      "IsChecked": false
+    },
+    {
+      "Text": "Line Voltage",
+      "IsChecked": false
+    },
+    {
+      "Text": "Auxconsumption Current",
+      "IsChecked": false
+    },
+    {
+      "Text": "Ammeter2 Abs",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Hourdial",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Minutedial",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Powerkey",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Powerkey",
+      "IsChecked": false
+    },
+    {
+      "Text": "Pantographs 4c",
+      "IsChecked": false
+    },
+    {
+      "Text": "Compressor Offautoon",
+      "IsChecked": false
+    },
+    {
+      "Text": "Compressor Offautoon2",
+      "IsChecked": false
+    },
+    {
+      "Text": "Command Cylinder",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Circuit Breaker Closed",
+      "IsChecked": false
+    },
+    {
+      "Text": "Line Voltage",
+      "IsChecked": false
+    },
+    {
+      "Text": "Auxconsumption Current",
+      "IsChecked": false
+    },
+    {
+      "Text": "Ammeter2 Abs",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Hourdial",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Minutedial",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Powerkey",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Powerkey",
+      "IsChecked": false
+    },
+    {
+      "Text": "Circular Lightsswitch Red",
+      "IsChecked": false
+    },
+    {
+      "Text": "Circular Lightsswitch White",
+      "IsChecked": false
+    },
+    {
+      "Text": "Compressor Offautoon",
+      "IsChecked": false
+    },
+    {
+      "Text": "Compressor Offautoon2",
+      "IsChecked": false
+    },
+    {
+      "Text": "Pantographs 4c",
+      "IsChecked": false
+    },
+    {
+      "Text": "Wipers",
+      "IsChecked": false
+    },
+    {
+      "Text": "Hv2button",
+      "IsChecked": false
+    },
+    {
+      "Text": "Break Power Button",
+      "IsChecked": false
+    },
+    {
+      "Text": "Direction",
+      "IsChecked": false
+    },
+    {
+      "Text": "Command Cylinder",
+      "IsChecked": false
+    },
+    {
+      "Text": "Auxcompressor Mode Offon",
+      "IsChecked": false
+    },
+    {
+      "Text": "Line Voltage",
+      "IsChecked": false
+    },
+    {
+      "Text": "Auxconsumption Current",
+      "IsChecked": false
+    },
+    {
+      "Text": "Ammeter2 Abs",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Powerkey",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Powerkey",
+      "IsChecked": false
+    },
+    {
+      "Text": "Pantographs 4c",
+      "IsChecked": false
+    },
+    {
+      "Text": "Compressor Offautoon",
+      "IsChecked": false
+    },
+    {
+      "Text": "Compressor Offautoon2",
+      "IsChecked": false
+    },
+    {
+      "Text": "Command Cylinder",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Circuit Breaker Closed",
+      "IsChecked": false
+    },
+    {
+      "Text": "Line Voltage",
+      "IsChecked": false
+    },
+    {
+      "Text": "Auxconsumption Current",
+      "IsChecked": false
+    },
+    {
+      "Text": "Ammeter2 Abs",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Powerkey",
+      "IsChecked": false
+    },
+    {
+      "Text": "Orts Powerkey",
+      "IsChecked": false
+    },
+    {
+      "Text": "Circular Lightsswitch Red",
+      "IsChecked": false
+    },
+    {
+      "Text": "Circular Lightsswitch White",
+      "IsChecked": false
+    },
+    {
+      "Text": "Compressor Offautoon",
+      "IsChecked": false
+    },
+    {
+      "Text": "Compressor Offautoon2",
+      "IsChecked": false
+    },
+    {
+      "Text": "Pantographs 4c",
+      "IsChecked": false
+    },
+    {
+      "Text": "Wipers",
+      "IsChecked": false
+    },
+    {
+      "Text": "Hv2button",
+      "IsChecked": false
+    },
+    {
+      "Text": "Break Power Button",
+      "IsChecked": false
+    },
+    {
+      "Text": "Direction",
+      "IsChecked": false
+    },
+    {
+      "Text": "Command Cylinder",
+      "IsChecked": false
+    },
+    {
+      "Text": "Auxcompressor Mode Offon",
+      "IsChecked": false
+    }
+  ],
+  "DockWindows": [
+    {
+      "Name": "ItemSelectionPanel",
+      "State": "DockLeftAutoHide",
+      "Visible": true
+    },
+    {
+      "Name": "",
+      "State": "DockTop",
+      "Visible": true
+    },
+    {
+      "Name": "",
+      "State": "DockTop",
+      "Visible": true
+    },
+    {
+      "Name": "ChartPanel",
+      "State": "Document",
+      "Visible": true
+    },
+    {
+      "Name": "ItemSelectionPanel",
+      "State": "DockLeftAutoHide",
+      "Visible": true
+    },
+    {
+      "Name": "",
+      "State": "DockTop",
+      "Visible": true
+    },
+    {
+      "Name": "",
+      "State": "DockTop",
+      "Visible": true
+    },
+    {
+      "Name": "ChartPanel",
+      "State": "Document",
+      "Visible": true
+    },
+    {
+      "Name": "ItemSelectionPanel",
+      "State": "DockLeftAutoHide",
+      "Visible": true
+    },
+    {
+      "Name": "",
+      "State": "DockRight",
+      "Visible": true
+    },
+    {
+      "Name": "",
+      "State": "DockRight",
+      "Visible": true
+    },
+    {
+      "Name": "ChartPanel",
+      "State": "DockBottom",
+      "Visible": true
+    },
+    {
+      "Name": "characteristicsPanel",
+      "State": "Document",
+      "Visible": true
+    }
+  ],
+  "Settings": {}
+}

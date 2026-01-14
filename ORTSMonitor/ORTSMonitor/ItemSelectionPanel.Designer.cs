@@ -37,16 +37,17 @@
             checkedListBox1.FormattingEnabled = true;
             checkedListBox1.Location = new Point(0, 0);
             checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(263, 307);
+            checkedListBox1.Size = new Size(247, 268);
             checkedListBox1.TabIndex = 4;
+            checkedListBox1.ItemCheck += checkedListBox1_ItemCheck;
             // 
             // ItemSelectionPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(247, 268);
             Controls.Add(checkedListBox1);
             Name = "ItemSelectionPanel";
-            Size = new Size(263, 307);
             ResumeLayout(false);
         }
 

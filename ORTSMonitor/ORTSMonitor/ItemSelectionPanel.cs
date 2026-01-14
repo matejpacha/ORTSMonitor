@@ -17,6 +17,7 @@ namespace ORTSMonitor
         {
             InitializeComponent();
             this.Text = "Signals";
+            CheckedItems = new List<CheckedItem>();
         }
         public class CheckedItem
         {
@@ -24,32 +25,25 @@ namespace ORTSMonitor
             public bool IsChecked { get; set; }
         }
 
+        public List<ItemSelectionPanel.CheckedItem> list;
+
         public List<ItemSelectionPanel.CheckedItem> CheckedItems
         {
             get
             {
-                List<ItemSelectionPanel.CheckedItem> list = new List<ItemSelectionPanel.CheckedItem>();
-                for (int i = 0; i < checkedListBox1.Items.Count; i++)
-                {
-                    list.Add(new CheckedItem
-                    {
-                        Text = checkedListBox1.Items[i].ToString(),
-                        IsChecked = checkedListBox1.GetItemChecked(i)
-                    });
-                }
-                
                 return list;
             }
 
             set
             {
                 checkedListBox1.BeginUpdate();
-                checkedListBox1.Items.Clear();  
+                checkedListBox1.Items.Clear();
                 foreach (ItemSelectionPanel.CheckedItem item in value)
                 {
-                    if(item.Text != null)
+                    if (item.Text != null)
                         checkedListBox1.Items.Add(item.Text, item.IsChecked);
                 }
+                list = value;
                 checkedListBox1.EndUpdate();
             }
         }
@@ -96,6 +90,42 @@ namespace ORTSMonitor
             checkedListBox1.EndUpdate();
         }
 
+        private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            string itemText = checkedListBox1.Items[e.Index].ToString();
+            int numOfItems = checkedListBox1.Items.Count;
+            bool newChecked = e.NewValue == CheckState.Checked;
 
+            CheckedItems.Clear();   
+
+            for (int i = 0; i < checkedListBox1.Items.Count; i++) 
+            {
+                CheckedItems.Add(new CheckedItem());
+                var checkedItem = CheckedItems.Last<CheckedItem>();
+                checkedItem.Text = checkedListBox1.Items[i].ToString();
+                checkedItem.IsChecked = checkedListBox1.GetItemChecked(i);
+            }
+
+            CheckedItems[e.Index].IsChecked = newChecked;
+
+            ItemCheckedChanged?.Invoke(this, new ItemCheckedEventArgs(itemText, newChecked, e.Index));
+        }
+
+        public event EventHandler<ItemCheckedEventArgs> ItemCheckedChanged;
+
+        public class ItemCheckedEventArgs : EventArgs
+        {
+            public string ItemText { get; }
+            public bool NewCheckedState { get; }
+
+            public int Index { get; }
+
+            public ItemCheckedEventArgs(string itemText, bool newCheckedState, int index)
+            {
+                ItemText = itemText;
+                NewCheckedState = newCheckedState;
+                Index = index;
+            }
+        }
     }
 }
