@@ -224,6 +224,8 @@ namespace ORTSMonitor
         private readonly string _baseUrl;
         private readonly string[] _colorCodes = { "???", "??!", "?!?", "?!!", "!??", "!!?", "!!!", "%%%", "%$$", "%%$", "$%$", "$$$" };
 
+        public string BaseURL {  get {  return _baseUrl; } }
+
         public OpenRailsWebDataReader(string baseUrl = "http://localhost:2150")
         {
             _httpClient = new HttpClient();

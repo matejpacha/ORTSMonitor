@@ -40,5 +40,14 @@ namespace ORTSMonitor
         {
             this.Text = text;
         }
+
+        private void HtmlViewer_FormClosing(object sender, FormClosingEventArgs e)
+        { 
+            if (webBrowser != null)
+            {
+                webBrowser.Dispose();
+                webBrowser = null;
+            }
+        }
     }
 }

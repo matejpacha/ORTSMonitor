@@ -14,7 +14,7 @@ namespace ORTSMonitor
     {
 
         private HttpClient httpClient = new HttpClient();
-        OpenRailsWebDataReader reader = new OpenRailsWebDataReader("http://localhost:2150");
+        OpenRailsWebDataReader reader;
 
         ItemSelectionPanel myItemSelectionPanel;
         ConsolePanel myConsolePanel;
@@ -28,18 +28,22 @@ namespace ORTSMonitor
         double distance = 0.0;
         double time = 0.0;
 
+        bool ProjectFileActive = false;
+
         ProjectFile projectFile;
 
         public Form1()
         {
             InitializeComponent();
 
-            timer1.Interval = 500; // 500 ms
+            timer1.Interval = Properties.Settings.Default.RefreshRateMs; // 500 ms
             timer1.Start();
 
             toolStripStatusLabel1.Text = "Waiting for OpenRails...";
 
-            
+            reader = new OpenRailsWebDataReader("http://" + Properties.Settings.Default.ServerAddress + ":" + Properties.Settings.Default.Port.ToString());
+
+
 
             dockPanel1.Theme = new VS2015LightTheme(); // or another valid theme
 
@@ -47,30 +51,35 @@ namespace ORTSMonitor
             myItemSelectionPanel.Show(dockPanel1, DockState.DockLeftAutoHide);
 
             myConsolePanel = new ConsolePanel();
-            myConsolePanel.Show(dockPanel1, DockState.DockRight);
+            myConsolePanel.Show(dockPanel1, DockState.DockLeftAutoHide);
 
             trackMonitor = new HtmlViewer();
             trackMonitor.Text = "Track Monitor";
 
-            trackMonitor.Navigate("http://localhost:2150/TrackMonitor/index.html");
-            trackMonitor.Show(dockPanel1, DockState.DockTop);
+            trackMonitor.Navigate("http://" + Properties.Settings.Default.ServerAddress + ":" + Properties.Settings.Default.Port.ToString() + "/TrackMonitor/index.html");
+            if (Properties.Settings.Default.TrackMonitorVisible)
+                trackMonitor.Show(dockPanel1, DockState.DockRight);
 
             trainDriving = new HtmlViewer();
             trainDriving.Text = "Train Driving";
 
-            trainDriving.Navigate("http://localhost:2150/TrainDriving/index.html");
-            trainDriving.Show(dockPanel1, DockState.DockBottom);
+            trainDriving.Navigate("http://" + Properties.Settings.Default.ServerAddress + ":" + Properties.Settings.Default.Port.ToString() + "/TrainDriving/index.html");
+            if (Properties.Settings.Default.TrainDrivingVisible)
+                trainDriving.Show(dockPanel1, DockState.DockRight);
 
             myChart = new ChartPanel();
-            myChart.Show(dockPanel1, DockState.DockTop);
+            if (Properties.Settings.Default.ChartDistanceVisible)
+                myChart.Show(dockPanel1, DockState.DockTop);
 
             locoChar = new characteristicsPanel();
-            locoChar.Show(dockPanel1, DockState.DockBottom);
+            if (Properties.Settings.Default.ChartTractionVisible)
+                locoChar.Show(dockPanel1, DockState.Document);
 
             timeChart = new TimeChartPanel();
             timeChart.ListOfItems = myItemSelectionPanel.CheckedItems;
             timeChart.UpdateList();
-            timeChart.Show(dockPanel1, DockState.DockTop);
+            if (Properties.Settings.Default.ChartTimeVisible)
+                timeChart.Show(dockPanel1, DockState.DockBottom);
 
             projectFile = new ProjectFile();
             timeSpan = 0.0;
@@ -80,6 +89,9 @@ namespace ORTSMonitor
 
             myItemSelectionPanel.FormClosed += MyItemSelectionPanel_FormClosed;
             myConsolePanel.FormClosed += MyConsolePanel_FormClosed;
+
+            openFileDialog1.InitialDirectory = Properties.Settings.Default.LastDir;
+            saveFileDialog1.InitialDirectory = Properties.Settings.Default.LastDir;
 
         }
 
@@ -149,14 +161,16 @@ namespace ORTSMonitor
 
                 myConsolePanel.ConsoleText = forceInfo;
 
-                
+
 
                 if (trainDrivingData.StartsWith("Error:"))
                 {
                     toolStripStatusLabel1.Text = "OpenRails offline";
                     toolStripStatusLabel1.BackColor = Color.Red;
 
-                    toolStripStatusLabel2.Text = "Refresh rate: waiting ..." ;
+                    toolStripStatusLabel2.Text = "Refresh rate: waiting ...";
+
+                    toolStripStatusLabel3.Text = reader.BaseURL;
 
                 }
                 else
@@ -164,7 +178,9 @@ namespace ORTSMonitor
                     toolStripStatusLabel1.Text = "OpenRails online";
                     toolStripStatusLabel1.BackColor = Color.Green;
 
-                    toolStripStatusLabel2.Text = "Refresh rate: " + timeSpan.ToString();
+                    toolStripStatusLabel2.Text = "Refresh rate: " + timeSpan.ToString("F2");
+
+                    toolStripStatusLabel3.Text = reader.BaseURL;
 
                     TrainDrivingData parsedData = await reader.ParseTrainDrivingDataAsync(true);
 
@@ -183,7 +199,7 @@ namespace ORTSMonitor
 
                     double frictionForce = 0.0;
 
-                    foreach(HudCarForceData car in hudForceData.CarForces)
+                    foreach (HudCarForceData car in hudForceData.CarForces)
                     {
                         frictionForce += (car.Friction ?? 0.0) + (car.Tunnel ?? 0.0) + (car.Wind ?? 0.0) + (car.Curve ?? 0.0) - (car.Gravity ?? 0.0);
                     }
@@ -197,8 +213,8 @@ namespace ORTSMonitor
                     }
 
                     double speed = parsedData.Speed ?? 0.0;
-                    
-                    if (parsedData.Distance != null) 
+
+                    if (parsedData.Distance != null)
                     {
                         distance = parsedData.Distance ?? 0.0;
                     }
@@ -206,7 +222,7 @@ namespace ORTSMonitor
                     {
                         distance += Math.Abs(speed) / 3.6 * timeSpan;
                     }
-                    
+
                     double curve = hudForceData.CarForces[0].CurveRadius ?? 0.0;
                     double grade = hudForceData.CarForces[0].Gradient ?? 0.0;
 
@@ -241,7 +257,7 @@ namespace ORTSMonitor
                     if (speed < 0.0)
                         speed = -speed;
 
-                    myChart.AddSpeedPoint(distance, speed, parsedData.Limit ?? 0.0, grade * 10.0, curve *0.01);
+                    myChart.AddSpeedPoint(distance, speed, parsedData.Limit ?? 0.0, grade * 10.0, curve * 0.01);
 
                     locoChar.AddCharPoint(speed, force * direction, adhesionLimit, frictionForce);
 
@@ -293,6 +309,12 @@ namespace ORTSMonitor
                         }
 
                     }
+                    Properties.Settings.Default.LastSavedProject = openFileDialog1.FileName;
+                    Properties.Settings.Default.LastDir = Path.GetFileName(Path.GetDirectoryName(openFileDialog1.FileName));
+                    Properties.Settings.Default.Save();
+
+                    this.Text = "OpenRails CZ/SK Web Monitor: " + openFileDialog1.FileName;
+                    ProjectFileActive = true;
                 }
                 catch (Exception ex)
                 {
@@ -305,31 +327,44 @@ namespace ORTSMonitor
         {
             if (saveFileDialog1.ShowDialog(this) == DialogResult.OK)
             {
-                try
-                {
-                    projectFile.Name = saveFileDialog1.FileName;
-
-                    projectFile.CheckedItems = myItemSelectionPanel.CheckedItems;
-
-                    foreach (DockContent content in dockPanel1.Contents)
-                    {
-                        projectFile.DockWindows.Add(new DockWindowSetting(content.Name, content.DockState, Visible));
-                    }
-
-                    // Serialize to JSON and save
-                    var options = new JsonSerializerOptions
-                    {
-                        Converters = { new JsonStringEnumConverter() },
-                        WriteIndented = true
-                    };
-                    string json = JsonSerializer.Serialize(projectFile, options);
-                    File.WriteAllText(saveFileDialog1.FileName, json);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error: {ex.Message}");
-                }
+                projectFile.Name = saveFileDialog1.FileName;
+                saveProject();
             }
+        }
+
+        private void saveProject()
+        {
+            try
+            {
+
+
+                projectFile.CheckedItems = myItemSelectionPanel.CheckedItems;
+
+                foreach (DockContent content in dockPanel1.Contents)
+                {
+                    projectFile.DockWindows.Add(new DockWindowSetting(content.Name, content.DockState, Visible));
+                }
+
+                // Serialize to JSON and save
+                var options = new JsonSerializerOptions
+                {
+                    Converters = { new JsonStringEnumConverter() },
+                    WriteIndented = true
+                };
+                string json = JsonSerializer.Serialize(projectFile, options);
+                File.WriteAllText(saveFileDialog1.FileName, json);
+
+                Properties.Settings.Default.LastSavedProject = projectFile.Name;
+                Properties.Settings.Default.Save();
+
+                this.Text = "OpenRails CZ/SK Web Monitor: " + projectFile.Name;
+                ProjectFileActive = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+
         }
 
         private void signalsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -338,13 +373,13 @@ namespace ORTSMonitor
 
             if (Properties.Settings.Default.SignalsViewOn)
             {
-                if(myItemSelectionPanel.IsDisposed)
+                if (myItemSelectionPanel.IsDisposed)
                 {
                     myItemSelectionPanel = new ItemSelectionPanel();
                     myItemSelectionPanel.Show(dockPanel1, DockState.DockLeft);
                     myItemSelectionPanel.ItemCheckedChanged += ItemSelectionPanel_ItemCheckedChanged;
 
-                    if(timeChart.IsDisposed == false) 
+                    if (timeChart.IsDisposed == false)
                     {
                         timeChart.ListOfItems = myItemSelectionPanel.CheckedItems;
                         timeChart.UpdateList();
@@ -385,6 +420,156 @@ namespace ORTSMonitor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+        }
+
+        private void tractionCharToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ChartTractionVisible = !Properties.Settings.Default.ChartTractionVisible;
+
+            if (Properties.Settings.Default.ChartTractionVisible)
+            {
+                if (locoChar.IsDisposed)
+                {
+                    locoChar = new characteristicsPanel();
+                    locoChar.Show(dockPanel1, DockState.DockRight);
+                }
+                locoChar.Show(dockPanel1);
+            }
+            else
+            {
+                if (locoChar.IsDisposed == false)
+                {
+                    locoChar.Hide();
+                }
+            }
+
+        }
+
+        private void timeChartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ChartTimeVisible = !Properties.Settings.Default.ChartTimeVisible;
+
+            if (Properties.Settings.Default.ChartTimeVisible)
+            {
+                if (timeChart.IsDisposed)
+                {
+                    timeChart = new TimeChartPanel();
+                    timeChart.Show(dockPanel1, DockState.DockRight);
+                }
+                timeChart.Show(dockPanel1);
+            }
+            else
+            {
+                if (timeChart.IsDisposed == false)
+                {
+                    timeChart.Hide();
+                }
+            }
+
+        }
+
+        private void distanceChartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ChartDistanceVisible = !Properties.Settings.Default.ChartDistanceVisible;
+
+            if (Properties.Settings.Default.ChartDistanceVisible)
+            {
+                if (myChart.IsDisposed)
+                {
+                    myChart = new ChartPanel();
+                    myChart.Show(dockPanel1, DockState.DockRight);
+                }
+                myChart.Show(dockPanel1);
+            }
+            else
+            {
+                if (myChart.IsDisposed == false)
+                {
+                    myChart.Hide();
+                }
+            }
+        }
+
+        private void trackMonitorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.TrackMonitorVisible = !Properties.Settings.Default.TrackMonitorVisible;
+
+            if (Properties.Settings.Default.TrackMonitorVisible)
+            {
+                if (trackMonitor.IsDisposed)
+                {
+                    trackMonitor = new HtmlViewer();
+                    trackMonitor.Text = "Track Monitor";
+
+                    trackMonitor.Navigate("http://" + Properties.Settings.Default.ServerAddress + ":" + Properties.Settings.Default.Port.ToString() + "/TrackMonitor/index.html");
+                    trackMonitor.Show(dockPanel1, DockState.DockRight);
+                }
+                trackMonitor.Show(dockPanel1);
+            }
+            else
+            {
+                if (trackMonitor.IsDisposed == false)
+                {
+                    trackMonitor.Hide();
+                }
+            }
+        }
+
+        private void trainDrivingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.TrainDrivingVisible = !Properties.Settings.Default.TrainDrivingVisible;
+
+            if (Properties.Settings.Default.TrainDrivingVisible)
+            {
+                if (trainDriving.IsDisposed)
+                {
+                    trainDriving = new HtmlViewer();
+                    trainDriving.Text = "Track Monitor";
+
+                    trainDriving.Navigate("http://" + Properties.Settings.Default.ServerAddress + ":" + Properties.Settings.Default.Port.ToString() + "/TrainDriving/index.html");
+                    trainDriving.Show(dockPanel1, DockState.DockRight);
+                }
+                trainDriving.Show(dockPanel1);
+            }
+            else
+            {
+                if (trainDriving.IsDisposed == false)
+                {
+                    trainDriving.Hide();
+                }
+            }
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (timer1 != null)
+            {
+                timer1.Stop();
+                timer1.Dispose();
+            }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProjectFileActive = false;  
+
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(!ProjectFileActive) 
+            {
+                saveAsToolStripMenuItem_Click(sender, e);
+            }
+            else
+            {
+                saveProject();
+            }
         }
     }
 }
